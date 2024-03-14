@@ -1,0 +1,45 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.meir.meirordersmobile.controller.MOHome"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<VBox class="bckGrndWH" width="100%" height="100%" alignContent="Center">
+		<VBox width="100%" justifyContent="Center" class="mainBackground" height="21%">
+			<Image src="css/icons/logo@2x.png" class="logoStyle"></Image>
+			<Text text="{i18n>hello} {moModel>/MOHome/UserBPDataSet/0/NameFirst} {moModel>/MOHome/UserBPDataSet/0/NameLast}"
+				class="title sapUiSmallMarginBegin sapUiSmallMarginBottom mrgTp95"></Text>
+		</VBox>
+		<Text text="{i18n>yourActions}" class="mrg15 valueTxt"></Text>
+		<VBox alignItems="Center" width="100%" class="sapUiSmallMarginBottom">
+			<SegmentedButton selectedKey="nextDays" select="filterByDate" class="SegmentedButton">
+				<items>
+					<SegmentedButtonItem text="{i18n>nextDays}" key="nextDays"/>
+					<SegmentedButtonItem text="{i18n>2DayAgo}" key="2DayAgo"/>
+					<SegmentedButtonItem text="{i18n>weekAgo}" key="weekAgo"/>
+					<SegmentedButtonItem text="{i18n>2weeksAgo}" key="2weeksAgo"/>
+				</items>
+			</SegmentedButton>
+		</VBox>
+		<ScrollContainer  vertical="true" focusable="true" horizontal="false" width="100%" class="minHeight ScrollContainerEl">
+			<List id="callsList" items="{path: 'moModel>/MOHome/ActivitySet' , sorter: [{path: 'Date', group: true}, {path: 'Time', aescending: true}]}">
+				<CustomListItem type="Active" press="onListItemPress" class="listStyle sapUiSmallMarginTop" data:activityDetails="{moModel>}">
+					<HBox class="activityItemEl" width="95%">
+						<Image src="css/icons/phone.png" visible="{= ${moModel>Description}.includes(${i18n>phone}) ? true : false}"></Image>
+						<Image src="css/icons/calendar.png" visible="{= ${moModel>Description}.includes(${i18n>phone}) ? false : true}"></Image>
+						<VBox class=".mrgTpBt8" width="100%">
+							<HBox justifyContent="SpaceBetween" width="100%">
+								<Text text="{moModel>Description}" class="titleListTxt"></Text>
+								<Image src="css/icons/history_edu_black_24dp.png" visible="{= ${moModel>Detailexists} ? true : false}"></Image>
+							</HBox>
+							<HBox>
+								<Text text="{=${path:'moModel>Date', formatter: '.formatter.formatMillisecondsToDate'}}" class="valueListTxt"></Text>
+								<Text text="{=${path:'moModel>Time', formatter: '.formatter.formatMillisecondsToTime'}}" class="valueListTxt sapUiTinyMarginBegin "></Text>
+							</HBox>
+						</VBox>
+					</HBox>
+				</CustomListItem>
+			</List>
+		</ScrollContainer>
+		<HBox class="fixed bckGrndWH" width="100%" justifyContent="Center">
+			<Button text="{i18n>recordNewCall}" class="btnRecordNewCall btnRecordNewCallHW mrgtop15" icon="css/icons/phone_in_talk_black.png"
+				press="onNewActivityButtonPress"></Button>
+		</HBox>
+	</VBox>
+</mvc:View>

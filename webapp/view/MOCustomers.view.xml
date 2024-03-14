@@ -1,0 +1,26 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="com.meir.meirordersmobile.controller.MOCustomers" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox class="viewBackground" width="100%" height="100%">
+		<VBox class="headerCustomers">
+			<Image src="css/icons/logo@2x.png" class="logoStyleCustomer"></Image>
+			<HBox class="headerCallCustomer">
+				<Image src="css/icons/arrow_back_white_24dp.svg" class="backArrow" press="onNavigatePressReturn"/>
+				<Text class="textNewCall" text="{i18n>newCallDocumentation}"/>
+			</HBox>
+			<SearchField id="searchCustomer" placeholder="{i18n>searchCustomerByName}" liveChange="onClientliveChange" class="searchFieldEl"/>
+		</VBox>
+		<ScrollContainer height="90%" vertical="true" focusable="true" horizontal="false">
+			<List id="customerList" class="customerListEl" includeItemInSelection="true" items="{path: '/CustomerSet'}" visible="false">
+				<CustomListItem type="Active" class="customerListItem" press="onPressCustomer">
+					<HBox justifyContent="SpaceBetween">
+						<HBox class="flexCustomer">
+							<Text text="{NameFirst}" class="itemfontSize itemWidthName"/>
+							<Text text="{NameLast}" class="itemfontSize itemWidthName"/>
+						</HBox>
+						<Text text="{TelNumber}" class="itemfontSize itemWidthNum"/>
+					</HBox>
+				</CustomListItem>
+			</List>
+		</ScrollContainer>
+	</VBox>
+</mvc:View>

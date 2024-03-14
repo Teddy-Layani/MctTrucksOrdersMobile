@@ -1,0 +1,88 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:uni="sap.ui.unified"
+	controllerName="com.meir.meirordersmobile.controller.MONewActivityDetails" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<VBox class="bckGrndNewActivityWH" width="100%" height="100%">
+		<HBox class="mainBackground" height="19%">
+			<Image src="css/icons/logo@2x.png" class="logoStyleNAD"></Image>
+			<HBox class="mrgTop20">
+				<Image src="css/icons/arrow_back_white_24dp.svg" class="backArrow mrgTop50 sapUiSmallMarginBegin" press="onNavigatePressReturn"/>
+				<Text text="{i18n>Record} {moModel>/MONewActivityDetails/currentActivityDetails/Description}"
+					class="titleRecord sapUiLargeMarginTop sapUiTinyMarginBegin"></Text>
+			</HBox>
+		</HBox>
+		<ScrollContainer class="scrollEl ScrollContainerEl" height="100%" vertical="true" focusable="true" horizontal="false" width="100%">
+			<VBox alignItems="Center">
+				<VBox class="flexBox">
+					<HBox width="100%">
+						<HBox class="bckBlue sapUiSmallMarginBegin sapUiSmallMarginTop sapUiSmallMarginBottom" justifyContent="Center" alignItems="Center">
+							<Image src="css/icons/phone_in_talk_black.png"></Image>
+						</HBox>
+						<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTop" width="103%">
+							<Text text="{moModel>/MONewActivityDetails/currentActivityDetails/Description}" class="titleNewActivity"></Text>
+							<HBox class="sapUiSmallMarginTop" justifyContent="SpaceBetween">
+								<HBox width="100%">
+									<Image src="css/icons/bag.png" class="mrg3"></Image>
+									<Text text="{=${path:'moModel>/MONewActivityDetails/currentActivityDetails/Date', formatter: '.formatter.formatMillisecondsToDate'}}"
+										class="mrgRght5"></Text>
+								</HBox>
+								<HBox width="100%">
+									<Image src="css/icons/clock.svg" class="mrg3"></Image>
+									<Text text="{=${path:'moModel>/MONewActivityDetails/currentActivityDetails/Time', formatter: '.formatter.formatMillisecondsToTime'}}"
+										class="mrgRght2"></Text>
+								</HBox>
+							</HBox>
+						</VBox>
+					</HBox>
+					<HBox class="sapUiSmallMarginBegin sapUiSmallMarginBottom" justifyContent="SpaceBetween" width="90%">
+						<!--visible="{= ${moModel>/MONewActivityDetails/currentActivityDetails/StatusDesc} === '' ? false : true}">-->
+						<Select forceSelection="false" items="{moModel>/MONewActivityDetails/currentActivityDetails/ActivityStatusOptions}"
+							selectedKey="{moModel>/MONewActivityDetails/currentActivityDetails/ActivityStatus}" change="onStatusOppChange" class="selectStatus">
+							<core:Item key="{moModel>Status}" text="{moModel>StatusDesc}"/>
+						</Select>
+						<!--<HBox width="100%" alignItems="Center" class="bckGrey">-->
+						<!--	<HBox class="blueDot sapUiTinyMarginBegin" alignItems="Center" justifyContent="Center">-->
+						<!--		<HBox class="blueSmallDot"></HBox>-->
+						<!--	</HBox>-->
+						<!--	<Text text="{moModel>/MONewActivityDetails/currentActivityDetails/StatusDesc}" class="sapUiTinyMarginBegin titleNewActivity"></Text>-->
+						<!--	<Text text="{=${path:'moModel>/MONewActivityDetails/currentActivityDetails/CreateDate', formatter: '.formatter.formatDotDate'}}"-->
+						<!--		class="sapUiTinyMarginBegin titleNewActivity sapUiTinyMarginBegin"></Text>-->
+						<!--</HBox>-->
+						<HBox class="sapUiSmallMarginEnd" alignItems="Center">
+							<Image src="css/icons/arrowsSvg.svg" class="sapUiTinyMarginBegin"></Image>
+							<Text text="{moModel>/MONewActivityDetails/currentActivityDetails/VechileModel}" class="mrgRght5"></Text>
+						</HBox>
+					</HBox>
+				</VBox>
+				<VBox width="90%" class="attachmentsBox">
+					<Text text="{i18n>summaryCall}" class="fontStyleSumCall"></Text>
+					<TextArea id="textArea" placeholder="{i18n>enterText}" class="textArea"
+						value="{moModel>/MONewActivityDetails/currentActivityDetails/Comments}" growing="true" growingMaxLines="7" height="182px" width="100%"/>
+					<List id="oldAttachmentList" class="attachmentListEl" items="{moModel>/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet}"
+						includeItemInSelection="true" showNoData="false" mode="None">
+						<CustomListItem class="newAttachmenListItem" type="Inactive">
+							<HBox justifyContent="SpaceBetween" class="attachmentEl">
+								<HBox class="flexBoxEl">
+									<Image class="IconMarginLeft" src="{=${path:'moModel>AttachmentType', formatter:'.getIconType'}}"/>
+									<Link text="{moModel>FileName}" press="onViewDoc" data:attachmentDetails="{moModel>}"/>
+								</HBox>
+								<HBox class="deletePlayBtn">
+									<ToggleButton id="togglePlayBtn" icon="css/icons/play_circle_black.svg" press="onPlaySaveRecording"
+										visible="{= ${moModel>AttachmentType} === '2' ? true : false}" data:attachmentDetails="{moModel>}"/>
+									<core:Icon id="deleteRecordingBtn" src="sap-icon://delete" press="onDeleteAttachment" data:fileName="{newAttachmentList>FileName}"
+										visible="{= ${moModel>isNew} ? true : false}" size="23px" class="icon-delete" color="#930822"/>
+								</HBox>
+							</HBox>
+						</CustomListItem>
+					</List>
+					<uni:FileUploader id="smallBtnFileUpload" buttonText="{i18n>addDoc}" iconOnly="false" buttonOnly="true" icon="css/icons/pluss.svg"
+						sameFilenameAllowed="true" fileType="JPG,JPEG,jpeg,jpg,PNG,png,doc,docx,pdf,PDF" class="upload1 upload12 fileUploaderEl2"
+						change=".handleUpload" visible="true"/>
+				</VBox>
+			</VBox>
+		</ScrollContainer>
+		<HBox id="footerEl" width="100%" justifyContent="SpaceBetween" class="sapUiTinyMarginTop footerEl">
+			<Button class="btnMicrophone" icon="css/icons/microphoneIcon.svg" press="onOpenRecordDialog"></Button>
+			<Button text="{i18n>save}" class="btnRecordNewCall btnSave" press="createNewActivity"></Button>
+		</HBox>
+	</VBox>
+</mvc:View>

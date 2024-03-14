@@ -1,0 +1,230 @@
+{
+    "resources": [
+        {
+            "name": "../controller/MOCreateNewActivity-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "../controller/MOCustomers.controller.js"
+        },
+        {
+            "name": "../manifest.json"
+        },
+        {
+            "name": "../js/error/Error.js"
+        },
+        {
+            "name": "../model/models.js"
+        },
+        {
+            "name": "../js/formatter.js"
+        },
+        {
+            "name": "../controller/MONewActivityDetails.controller.js"
+        },
+        {
+            "name": "../controller/MOHome.controller.js"
+        },
+        {
+            "name": "../model/appModel.json"
+        },
+        {
+            "name": "../controller/MOCreateNewActivity.controller.js"
+        },
+        {
+            "name": "../controller/BaseController.js"
+        },
+        {
+            "name": "../controller/App.controller.js"
+        },
+        {
+            "name": "../serviceBinding.js"
+        },
+        {
+            "name": "../Component.js"
+        },
+        {
+            "name": "../manifest-bundle.zip"
+        },
+        {
+            "name": "../Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "../js/error/Error-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../model/models-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../js/formatter-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../controller/MONewActivityDetails-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "../controller/MOHome-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "../controller/MOCustomers-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "../i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "../controller/BaseController-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../controller/App-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "../serviceBinding-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../Component-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../../../sap-ui-version.json"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": "di.code-validation.core_issues.json"
+        },
+        {
+            "name": "../js/error/error.css"
+        },
+        {
+            "name": "../css/icons/success_Arrow.png"
+        },
+        {
+            "name": "../css/icons/successArrow.svg"
+        },
+        {
+            "name": "../css/icons/schedule_black.svg"
+        },
+        {
+            "name": "../css/icons/pluss.svg"
+        },
+        {
+            "name": "../css/icons/play_circle_black.svg"
+        },
+        {
+            "name": "../css/icons/phone_in_talk_black.png"
+        },
+        {
+            "name": "../css/icons/phone.png"
+        },
+        {
+            "name": "../css/icons/noun_date.svg"
+        },
+        {
+            "name": "../css/icons/music_note_black.svg"
+        },
+        {
+            "name": "../css/icons/music_black_icon.svg"
+        },
+        {
+            "name": "../css/icons/microphoneIcon.svg"
+        },
+        {
+            "name": "../css/icons/microphone.svg"
+        },
+        {
+            "name": "../css/icons/logo@2x.png"
+        },
+        {
+            "name": "../css/icons/imageIcon.svg"
+        },
+        {
+            "name": "../css/icons/icons8-pause-30.png"
+        },
+        {
+            "name": "../css/icons/history_edu_black_24dp.png"
+        },
+        {
+            "name": "../css/icons/delete_outline_black.svg"
+        },
+        {
+            "name": "../css/icons/clock.svg"
+        },
+        {
+            "name": "../css/icons/clock.png"
+        },
+        {
+            "name": "../css/icons/calendarEvent.png"
+        },
+        {
+            "name": "../css/icons/calendar.png"
+        },
+        {
+            "name": "../css/icons/bag.png"
+        },
+        {
+            "name": "../css/icons/article_black_icon.svg"
+        },
+        {
+            "name": "../css/icons/arrowsSvg.svg"
+        },
+        {
+            "name": "../css/icons/arrows.png"
+        },
+        {
+            "name": "../css/icons/arrow_back_white_24dp.svg"
+        },
+        {
+            "name": "../css/icons/arrow_back_black_24dp.svg"
+        },
+        {
+            "name": "../css/icons/Mask.svg"
+        },
+        {
+            "name": "../view/saveDetailsDialog.fragment.xml"
+        },
+        {
+            "name": "../view/RecordAudioDialog.fragment.xml"
+        },
+        {
+            "name": "../view/MONewActivityDetails.view.xml"
+        },
+        {
+            "name": "../view/MOHome.view.xml"
+        },
+        {
+            "name": "../view/MOCustomers.view.xml"
+        },
+        {
+            "name": "../view/MOCreateNewActivity.view.xml"
+        },
+        {
+            "name": "../view/App.view.xml"
+        },
+        {
+            "name": "../css/stylesn.css"
+        },
+        {
+            "name": "../css/stylesg.css"
+        },
+        {
+            "name": "../css/style.css"
+        },
+        {
+            "name": "../index_dev.html"
+        },
+        {
+            "name": "../index.html"
+        }
+    ]
+}

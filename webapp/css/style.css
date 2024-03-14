@@ -1,0 +1,406 @@
+@import '../js/error/error.css';
+@import './stylesn.css';
+@import './stylesg.css';
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;500;600;800&family=Rubik&display=swap');
+
+.bckGrndWH {
+    background-color: white;
+}
+
+.bckGrndNewActivityWH {
+    background-color: white;
+}
+
+.mainBackground {
+    border-radius: 0 0 20px 20px;
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+    box-shadow: 0 16px 31px 0 rgba(43, 139, 213, 0.4);
+
+}
+
+.mrgTop50 {
+    margin-top: 50px;
+}
+
+.logoStyle {
+    height: 30px;
+    margin-top: 35px;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.SegmentedButton .sapMSegBBtn.sapMSegBBtnSel {
+    background: #4369E0;
+    color: #ffffff;
+    border-color: #4369E0;
+}
+
+.SegmentedButton.sapMSegB .sapMSegBBtn {
+    height: 2.5rem;
+    padding-right: 0rem;
+    padding-left: 0rem;
+    text-align: center;
+    text-shadow: none;
+    /*opacity: 0.7;*/
+    color: #505050;
+    font-family: Assistant;
+    font-size: 14px;
+    letter-spacing: -0.31px;
+    border-top: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    border-left: 1px solid #dedede;
+    background-color: #ffffff;
+}
+
+.SegmentedButton {
+    width: 450px;
+}
+
+.SegmentedButton .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover,
+.sapMSegBBtnFocusable.sapMBtnActive:hover {
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+    color: white;
+}
+
+.SegmentedButton .sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel {
+    border-left: 1px solid #4369E0;
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08px;
+}
+
+.sapMSegBBtn.sapMSegBBtnSel {
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+    color: #ffffff;
+    border-color: #4369E0;
+}
+
+.sapMSegB .sapMSegBBtn {
+    /*font-size: 10px;*/
+    height: 2.5rem;
+    /*line-height: 2.375rem;*/
+    padding-right: 0rem;
+    padding-left: 0rem;
+    text-align: center;
+    text-shadow: none;
+    /*opacity: 0.7;*/
+    color: #505050;
+    font-family: Assistant;
+    font-size: 14px;
+    letter-spacing: -0.31px;
+    border-top: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    border-left: 1px solid #dedede;
+    background-color: #ffffff;
+}
+
+.sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel:hover,
+.sapMSegBBtnFocusable.sapMBtnActive:hover {
+    background: #4369E0;
+    color: white;
+}
+
+.sapMSegBBtn.sapMSegBBtnFocusable.sapMSegBBtnSel {
+    border-left: 1px solid #4369E0;
+    background: #4369E0;
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08px;
+}
+
+.mrg15 {
+    margin: 15px;
+}
+
+.listStyle {
+    margin-right: 13px;
+    height: 70px;
+    width: 93%;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 20px 0 rgba(2, 40, 117, 0.19);
+    justify-content: center;
+}
+
+.title {
+    height: 26px;
+    width: 182px;
+    color: #FFFFFF;
+    font-family: Assistant;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 26px;
+    text-align: right;
+}
+
+.mrgTp95 {
+    margin-top: 95px;
+}
+
+.sapMText {
+    /*font-size: 0.875rem;*/
+    font-family: Assistant;
+    /*line-height: normal;*/
+}
+
+.sapUiBody {
+    font-family: Assistant;
+
+}
+
+.valueTxt {
+    color: #505050;
+    font-family: Assistant;
+    font-size: 16px;
+    font-weight: 600;
+
+}
+
+.titleNewActivity {
+    color: #505050;
+    font-family: Assistant;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+    line-height: 23px;
+    text-align: right;
+    font-weight: 700;
+}
+
+.valueListTxt {
+    color: #5F5F5F;
+    font-family: Assistant;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 18px;
+    text-align: right;
+}
+
+.titleListTxt {
+    color: #4369E0;
+    font-family: Assistant;
+    font-size:16px;
+    letter-spacing: 0;
+    line-height: 23px;
+    font-weight: 600;
+
+}
+
+.mrgTpBt8 {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.mrgTp8 {
+    margin-top: 8px;
+}
+
+.btnRecordNewCallHW .sapMBtnInner {
+    height: 50px;
+    width: 300px;
+}
+
+.btnRecordNewCall .sapMBtnInner {
+    /*margin-right: 14px;*/
+    border-radius: 10px;
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+    box-shadow: 0 3px 50px 0 rgba(5, 29, 77, 0.19);
+    border: none;
+    height: 50px;
+}
+
+.btnRecordNewCall .sapMBtnContent {
+    color: #FFFFFF;
+    font-family: Assistant;
+    font-size: 16px;
+    letter-spacing: 0.4px;
+    line-height: 2.7rem;
+}
+
+.btnRecordNewCall .sapMBtnText>.sapMBtnIcon {
+    position: absolute;
+    top: 11px;
+    right: 77px;
+    height: 23px;
+    width: 23px;
+}
+
+.btnRecordNewCall.sapMBtn:hover>.sapMBtnHoverable {
+    background-image: none;
+    background-color: #4369E0;
+}
+
+.btnSave {
+    width: 274px;
+}
+
+.btnSave .sapMBtnContent {
+    margin-top: -4px;
+}
+
+
+.btnMicrophone .sapMBtnInner {
+    border-radius: 10px;
+    background: white;
+    border: 2px solid #4369E0;
+    box-shadow: 0 3px 50px 0 rgba(5, 29, 77, 0.19);
+    height: 50px;
+    width: 50px;
+    margin-top: -4px
+}
+
+.btnMicrophone .sapMBtnIcon {
+    height: 28px;
+    margin-top: 10px;
+}
+
+.mrgtop15 {
+    margin-top: 15px;
+}
+
+/*.fixed {*/
+/*    height: 100px;*/
+/*    bottom: 0;*/
+/*    margin-bottom: 36px;*/
+    /*position: fixed;*/
+/*}*/
+.fixed {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    height: 100px;
+}
+
+.scrollContain{
+	width: 100vw !important;
+    height: 46vh !important;
+}
+
+.sapMLIB.sapMLIBActive {
+    background-color: #4369E0;
+}
+
+.sapMFlexBoxAlignItemsCenter.sapMVBox>.sapMFlexItem {
+    /*max-width: 90%;*/
+}
+
+.titleRecord {
+    color: #FFFFFF;
+    font-family: Assistant;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+    line-height: 28px;
+    font-weight: 600;
+    width: 83%;
+}
+
+.flexBox {
+    /*height: 153px;*/
+    width: 90%;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 30px 0 rgba(5, 47, 130, 0.19);
+    margin-top: 1.5rem;
+}
+
+.bckBlue {
+    height: 72px;
+    width: 103px;
+    border-radius: 10px;
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+}
+
+.bckGrey {
+    height: 35px;
+    width: 195px;
+    border-radius: 5px;
+    background-color: #E5E5E5;
+}
+
+.mrg3 {
+    margin: 3.5px;
+}
+
+.mrgRght5 {
+    margin-right: 5px;
+}
+
+.mrgRght2 {
+    margin-right: 2px;
+}
+
+.blueDot {
+    border-radius: 10px;
+    height: 18px;
+    width: 18px;
+    opacity: 0.16;
+    background-color: #378FDE;
+    /*background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);*/
+}
+
+.blueSmallDot {
+    height: 6px;
+    width: 6px;
+    background-color: #4369E0;
+    border-radius: 10px;
+}
+
+.upload11 .sapMBtnInner {
+    padding-left: 50px !important;
+    opacity: 0.8;
+    box-sizing: border-box;
+    height: 78px !important;
+    width: 21rem !important;
+    border: 2px dashed #4369E0;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: inset 0 0 9px 0 rgba(0, 0, 0, 0.04);
+}
+
+.upload .sapMBtnContent {
+    opacity: 0.8;
+    color: #505050;
+    font-family: Assistant;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 21px;
+    color: #505050;
+}
+
+.upload.sapUiFup:active .sapMBtnInner,
+.sapUiFup:hover .sapMBtnTransparent.sapMBtnHoverable {
+    background-image: none;
+    background-color: #4369E0;
+    border-color: #4369E0;
+    color: #ffffff;
+    text-shadow: none;
+}
+
+.upload .sapMBtn {
+    height: 100%;
+    width: 100%;
+}
+
+.textArea .sapMInputBaseInner {
+    border: 1px solid #DFDFE3;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.textArea .sapMInputBaseInner[placeholder] {
+    font-family: 'Assistant';
+}
+
+.textArea .sapMInputBaseInner:not(.sapMInputBaseReadonlyInner):not(.sapMInputBaseStateInner):not(.sapMInputBaseDisabledInner):hover {
+    /*border-color: #4369E0;*/
+}
+
+/*.width .sapMFlexItem {*/
+/*    width: 100%;*/
+/*}*/

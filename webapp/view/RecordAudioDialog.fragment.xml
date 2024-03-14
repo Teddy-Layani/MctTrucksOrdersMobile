@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog id="RecordAudioDialog" showHeader="false" width="90%">
+		<VBox alignItems="Center" class="recordingContainer" height="325px" renderType="Bare" justifyContent="Center">
+			<Text text="{timer>/Min}:{timer>/Sec}"></Text>
+			<Image src="css/icons/microphoneIcon.svg" width="60px" class="mrgBot25"/>
+			<ToggleButton id="toggleRecordBtn" text="{i18n>recording}" press="onToggleRecording" class="btnRecordNewCall btnSave"/>
+			<VBox alignItems="Center">
+				<HBox width="115px" justifyContent="SpaceBetween">
+					<core:Icon id="playRecordingBtn" src="sap-icon://play" press="onPlayRecording" visible="false" size="43px" color="green"/>
+					<core:Icon id="deleteRecordingBtn" src="sap-icon://delete" press="onDeleteRecording" visible="false"  size="40px" color="red"/>
+				</HBox>
+				<VBox class="mrgtop15">
+					<Button id="sevaRecordingBtn" text="{i18n>save}" press="onSaveRecording" visible="false" class="btnRecordNewCall btnSave"></Button>
+					<Button text="{i18n>close}" press="onCloseRecordDialog" visible="true" class="btnRecordNewCall btnSave mrgtop15"></Button>
+				</VBox>
+				
+			</VBox>
+		</VBox>
+	</Dialog>
+</core:FragmentDefinition>

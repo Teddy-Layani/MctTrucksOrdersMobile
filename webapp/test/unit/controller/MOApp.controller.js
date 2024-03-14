@@ -1,0 +1,1 @@
+sap.ui.define(["com/meir/meirOrders/controller/MOApp.controller"],function(t){"use strict";QUnit.module("MOApp Controller");QUnit.test("I should test the app controller loads",function(e){var o=new t;var r=o.getMetadata().getName();e.ok(r,"com/meir/meirOrders.controller.MOApp")});QUnit.test("I should test any additional controls",function(t){t.ok(false,"Implement test")})});

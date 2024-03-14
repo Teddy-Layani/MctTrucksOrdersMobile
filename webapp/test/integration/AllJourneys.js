@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/test/Opa5","com/meir/meirordersmobile/test/integration/pages/Common","sap/ui/test/opaQunit","com/meir/meirordersmobile/test/integration/pages/App","com/meir/meirordersmobile/test/integration/navigationJourney"],function(e,i){"use strict";e.extendConfig({arrangements:new i,viewNamespace:"com.meir.meirordersmobile.view.",autoWait:true})});

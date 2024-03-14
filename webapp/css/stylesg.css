@@ -1,0 +1,352 @@
+body {
+    margin: 0 auto;
+    padding: 0;
+}
+
+/*style for customer view*/
+.viewBackground {
+    background-color: white;
+}
+
+/*header*/
+
+.headerCustomers {
+    height: 28.5% !important;
+    width: 100%;
+    border-radius: 0 0 27px 27px;
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+    box-shadow: 0 16px 31px 0 rgb(43 139 213 / 40%);
+    padding: 1.7em 1.2em;
+    justify-content: space-between;
+    margin-bottom: 0.75em;
+}
+
+.headerCallEl {
+    margin-top: 1.8em;
+    margin-bottom: 0.4em !important;
+}
+
+.headerCallEl .backArrow {
+    height: 25px;
+    width: 16px;
+    margin-top: 2px;
+}
+
+.textNewCall {
+    color: #FFFFFF;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    line-height: 1.27em;
+    text-align: right;
+    font-family: 'Assistant', sans-serif;
+    font-weight: 600;
+    padding: 0 .6em;
+}
+
+/*SearchField*/
+
+.searchFieldEl .sapMSFF {
+    height: 47px;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #3665C3;
+    border: none;
+}
+
+.searchFieldEl .sapMSFB {
+    right: 0;
+    color: white;
+}
+
+
+.searchFieldEl .sapMSFI[type="search"] {
+    margin-right: 2em;
+    font-size: 1rem;
+}
+
+.searchFieldEl .sapMSFI {
+    color: white;
+    font-family: 'Assistant', sans-serif;
+    background: transparent;
+    width: 100%;
+    height: 2.375rem;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+    text-overflow: ellipsis;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.searchFieldEl .sapMSFF>.sapMSFB:not(.sapMSFBF) {
+    color: white !important;
+}
+
+.searchFieldEl .sapMSFI::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 0.9;
+    /* Firefox */
+    font-family: 'Assistant';
+    font-size: 1rem;
+    line-height: 1.313rem;
+    font-weight: 200;
+    text-align: right;
+    letter-spacing: 0.5px;
+    font-style: normal;
+}
+
+.sapMSFVal>.sapMSFF>.sapMSFR,
+:not(.sapMSFVal):not(.sapMFocus)>.sapMSFReload>.sapMSFR {
+    visibility: hidden;
+}
+
+/*List*/
+
+.customerListEl {
+    padding: 1em 1.2em;
+    height: 75vh;
+}
+
+
+.customerListItem {
+    border-radius: 10px;
+    border: 1px solid rgb(54 101 195 / 30%);
+    width: 100%;
+    font-size: 1.125rem;
+    letter-spacing: 0;
+    line-height: 1.27em;
+    text-align: right;
+
+    font-family: 'Assistant', sans-serif;
+    font-weight: 600;
+}
+
+.customerListEl .sapMListBGSolid .sapMLIB {
+    background: none;
+}
+
+.customerListEl .sapMLIB {
+    background-color: unset;
+}
+
+.itemfontSize {
+    font-size: 1.125rem;
+    line-height: 1.27em;
+}
+
+.itemWidthNum {
+    width: auto;
+    min-width: fit-content;
+}
+
+.itemWidthName {
+    margin-left: 0.3em;
+}
+
+.flexCustomer {
+    width: 53%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.customerListEl .sapMCLI.sapMLIB {
+    border: none;
+    padding: 0 1px;
+}
+
+.customerListEl .sapMFlexBoxJustifySpaceBetween {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin: 0.2em 0;
+    border-radius: 10px;
+    border: 1px solid rgb(54 101 195 / 30%);
+    width: 100%;
+    padding: 0.6em 0.4em;
+}
+
+/*style for New Activty Details View*/
+
+.fontStyleSumCall {
+    font-size: 1rem;
+    color: #505050;
+    letter-spacing: 0;
+    line-height: 21px;
+    text-align: right;
+    margin-top: 1.3rem;
+}
+
+#saveDetailsDialog {
+    min-width: 20rem;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0 3px 30px 0 rgba(5, 47, 130, 0.19);
+    height: 17.5rem;
+}
+
+.imgSuccessArrow {}
+
+.saveDialog .sapMText {
+    font-size: 1.125rem;
+    letter-spacing: 0;
+    line-height: 1.438rem;
+    font-weight: 600;
+
+}
+
+.saveDialog .sapMFlexItem {
+    margin-top: -22px;
+}
+
+.fileUploaderEl .sapMBtnIcon {
+    width: 1.2rem;
+    margin: 0.8em 6.6em;
+}
+
+.upload .sapMBtnContent {
+    margin-top: 2.7em;
+    opacity: 1;
+}
+
+.attachmentListEl .sapMListNoData {
+    border-bottom: none;
+}
+
+.upload .sapUiFupGroup>div>div:last-child {
+    padding-right: 0px;
+}
+
+.attachmentsBox .textArea .sapMInputBaseInner::placeholder {
+    font-family: 'Assistant';
+    font-style: normal;
+    font-size: 1rem;
+}
+
+
+.saveDialog .sapMBtn {
+    margin-top: 4.2rem;
+}
+
+.saveDialog .sapMImg {
+    margin-top: 2rem;
+}
+
+.saveDialog .sapMBtnInner {
+    margin-top: 0.2rem;
+    height: 50px;
+    width: 285px;
+    border-radius: 10px;
+    background: linear-gradient(135.58deg, #4369E0 0%, #378FDE 100%);
+    box-shadow: 0 3px 50px 0 rgba(5, 29, 77, 0.19);
+    border: none;
+    padding-top: 1em;
+}
+
+.saveDialog .sapMBtnContent {
+    font-family: 'Assistant';
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 21px;
+}
+
+.newAttachmenListItem {
+    border-radius: 3px;
+    border: 2px solid rgb(54 101 195 / 30%);
+    width: 100%;
+    font-size: 1.125rem;
+    letter-spacing: 0;
+    line-height: 1.27em;
+    text-align: right;
+    font-family: 'Assistant', sans-serif;
+    font-weight: 400;
+}
+
+.attachmentListEl .sapMCLI.sapMLIB {
+    padding: 0.5em;
+    margin: 0.4em 0;
+}
+
+.flexBoxEl {
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.IconMarginLeft {
+    margin-left: 0.5em;
+}
+
+.footerEl {
+    position: fixed;
+    align-content: center;
+    padding: 0 1.2em;
+    bottom: 1.5rem !important;
+}
+
+.newActiveView .sapMFlexItem {
+    height: 100%;
+}
+
+.scrollEl {
+    max-height: 480px;
+}
+
+.upload11 .sapMBtnInner {
+    padding-left: 50px !important;
+    opacity: 0.8;
+    box-sizing: border-box;
+    height: 49px !important;
+    width: 21rem !important;
+    border: 2px dashed #4369E0;
+    border-radius: 3px;
+    background: none;
+    box-shadow: inset 0 0 9px 0 rgba(0, 0, 0, 0.04);
+}
+
+.upload1 .sapMBtn {
+    width: 21rem;
+}
+
+.upload12 .sapMBtnInner {
+    border: 2px dashed #4369E0;
+    border-radius: 3px;
+    text-shadow: 0 1px 0 #ffffff;
+    background: none;
+}
+
+.upload1 .sapMBtnContent {
+    opacity: 0.8;
+    color: #505050;
+    font-family: Assistant;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 21px;
+    text-align: start;
+    margin-top: 0.4em;
+
+}
+
+.fileUploaderEl2 .sapMBtnIcon {
+    width: 1rem;
+    margin-inline-start: auto;
+    margin-right: 0.5em;
+    margin-top: 0.4em;
+}
+
+.recordingContainer{
+	padding: 25px;
+}
+
+.icon-delete {
+	position: relative;
+    top: 0px;
+}
+
+.mrgTop3en {
+    margin-top: 3em;
+}

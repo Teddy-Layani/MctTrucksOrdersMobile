@@ -1,0 +1,54 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+	controllerName="com.meir.meirordersmobile.controller.MOCreateNewActivity" xmlns:html="http://www.w3.org/1999/xhtml">
+	<VBox class="viewBackground" width="100%" height="100%" alignContent="Center">
+		<VBox width="100%">
+			<VBox class="newActivityHeader" width="100%" justifyContent="Center">
+				<Image src="css/icons/logo@2x.png" class="logoStyleCNA"></Image>
+				<HBox class="newCallEl mrgTop3en">
+					<Image src="css/icons/arrow_back_white_24dp.svg" class="backArrow" press="onNavigatePressReturn"/>
+					<Text class="textNewCall" text="{i18n>newCallDocumentation}"/>
+				</HBox>
+			</VBox>
+			<VBox class="pageContent">
+				<HBox>
+					<Text class="customerName sapUiTinyMarginBottom"
+						text="{moModel>/MOCustomers/CustomerObject/NameFirst} {moModel>/MOCustomers/CustomerObject/NameLast}"></Text>
+				</HBox>
+				<VBox width="100%">
+					<Text class="dateText sapUiTinyMarginBottom" text="{i18n>Date}"></Text>
+					<VBox width="100%" justifyContent="Center">
+						<DatePicker change="handleDateChange" class="activityDate" placeholder="DD/MM/YY" width="100%" value="{newActivitySetting>/PostingDate}"/>
+					</VBox>
+				</VBox>
+				<HBox class="sapUiSmallMarginTop timeBox" justifyContent="SpaceBetween">
+					<HBox width="50%">
+						<Image class="clockIcon" src="css/icons/clock.png"></Image>
+						<Text class="timeText" text="{i18n>Time}"></Text>
+					</HBox>
+					<TimePicker id="TP1" class="activityTime" value="{newActivitySetting>/Time}" valueFormat="HH:mm" displayFormat="HH:mm"
+						change="handleTimeChange" maskMode="On" placeholder="--:--"/>
+				</HBox>
+				<VBox width="100%">
+					<Text class="opportunityText sapUiTinyMarginBottom" text="{i18n>Opportunity}"></Text>
+					<ScrollContainer class="scrollContain mrgRgt_20" vertical="true" focusable="true" horizontal="false">
+						<List id="listOpp" items="{moModel>/MOCreateNewActivity/OpportunitySet}" mode="SingleSelectLeft" includeItemInSelection="true"
+							select="selectOpportunity" class="lst">
+							<CustomListItem class="listStyle lstHgt sapUiSmallMarginTop">
+								<VBox>
+									<HBox>
+										<Text text="{moModel>StatusDesc}" class="txtStatusDesc"></Text>
+										<Text text="{=${path:'moModel>CreateDate', formatter: '.formatter.formatDotDate'}}" class="sapUiTinyMarginBegin txtStatusDesc"></Text>
+									</HBox>
+									<Text text="{moModel>VechileModel}" class="valueListTxt"></Text>
+								</VBox>
+							</CustomListItem>
+						</List>
+					</ScrollContainer>
+				</VBox>
+			</VBox>
+		</VBox>
+		<HBox class="fixed bckGrndWH" width="100%" justifyContent="Center" alignItems="Center">
+			<Button class="btnContinue btnContinueHW" text="{i18n>Continue}" press="onPressGoNext"/>
+		</HBox>
+	</VBox>
+</mvc:View>

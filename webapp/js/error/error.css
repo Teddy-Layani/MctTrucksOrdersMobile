@@ -1,0 +1,38 @@
+.font-1d5rem {
+	font-size: 1.5rem;
+}
+
+.margin-bottom-20{
+	margin-bottom: 20px;
+}
+
+.content-padding {
+	padding: 18px;
+}
+
+.btn-standard .sapMBtnInner {
+	background: #133c8b;
+	text-shadow: 0 0 0 #ffffff;
+	color: white;
+	border-radius: 5px;
+}
+
+.btn-standard .sapMBtnInner:hover {
+	background: #133c8b !important;
+	text-shadow: 0 0 0 #ffffff;
+	color: white;
+	border-radius: 5px;
+}
+
+.btn-standard.sapMBtn:hover>.sapMBtnHoverable {
+	background: #133c8b !important;
+	
+}
+
+.errorDialog{
+	border-radius: 10px;
+}
+
+.margin-auto{
+	margin: 0 auto;
+}
