@@ -1,1 +1,9 @@
-sap.ui.define(["com/meir/meirordersmobile/controller/BaseController"],function(e){"use strict";return e.extend("com.meir.meirordersmobile.controller.App",{onInit:function(){}})});
+sap.ui.define([
+	"com/meir/meirordersmobile/controller/BaseController"
+], function (BaseController) {
+	"use strict";
+
+	return BaseController.extend("com.meir.meirordersmobile.controller.App", {
+		onInit: function () {},
+	});
+});

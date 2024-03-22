@@ -39,7 +39,10 @@
 		</ScrollContainer>
 		<HBox class="fixed bckGrndWH" width="100%" justifyContent="Center">
 			<Button text="{i18n>recordNewCall}" class="btnRecordNewCall btnRecordNewCallHW mrgtop15" icon="css/icons/phone_in_talk_black.png"
-				press="onNewActivityButtonPress"></Button>
+				press="onNewActivityButtonPress('ZPCT')"></Button>
+			<Button text="{i18n>recordNewApp}" class="btnRecordNewCall btnRecordNewCallHW mrgtop15" icon="css/icons/AppointmentInWhite2.png"
+				press="onNewActivityButtonPress('ZAPT')"></Button>
+
 		</HBox>
 	</VBox>
 </mvc:View>

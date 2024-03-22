@@ -1,1 +1,46 @@
-sap.ui.define(["sap/ui/model/json/JSONModel","sap/ui/Device"],function(e,r){"use strict";return{createDeviceModel:function(){var o=new e(r);o.setDefaultBindingMode("OneWay");return o},doRead:function(e,r,o,t,n){var i=e.getOwnerComponent().getModel(n);var s=t?true:false;e.getView().setBusy(s);if(!o.error){o.error=function(r){e.getView().setBusy(false);e.error.processConnectionError(r,e)}}i.read(r,o)},doCreate:function(e,r,o,t,n,i){var s=e.getOwnerComponent().getModel(i);var a=n?true:false;e.getView().setBusy(a);if(!t.error){t.error=function(r){e.getView().setBusy(false);e.error.processConnectionError(r,e)}}s.create(r,o,t)}}});
+sap.ui.define([
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/Device"
+], function (JSONModel, Device) {
+	"use strict";
+
+	return {
+
+		createDeviceModel: function () {
+			var oModel = new JSONModel(Device);
+			oModel.setDefaultBindingMode("OneWay");
+			return oModel;
+		},
+		
+		//Makes a GET call to the back end with given parameters
+		//This is the only one point of BE calls to GET data
+		doRead: function (oController, sEntitySet, mParams, bBusy, sModelName) {
+			var oODataModel = oController.getOwnerComponent().getModel(sModelName);
+			var bScreenBusy = bBusy ? true : false;
+			oController.getView().setBusy(bScreenBusy);
+			if(!mParams.error){
+				mParams.error = function(oError){
+					oController.getView().setBusy(false);
+					oController.error.processConnectionError(oError, oController);
+				};
+			}
+			oODataModel.read(sEntitySet, mParams);
+		},
+
+		//Makes a POST call to the back end with given parameters
+		//This is the only one point of BE calls to SEND data
+		doCreate: function (oController, sEntitySet, oPayload, mParams, bBusy,sModelName) {
+			var oODataModel = oController.getOwnerComponent().getModel(sModelName);
+			var bScreenBusy = bBusy ? true : false;
+			oController.getView().setBusy(bScreenBusy);
+			if(!mParams.error){
+				mParams.error = function(oError){
+					oController.getView().setBusy(false);
+					oController.error.processConnectionError(oError, oController);
+				};
+			}
+			oODataModel.create(sEntitySet, oPayload, mParams);
+		}
+
+	};
+});

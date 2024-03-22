@@ -1,1 +1,547 @@
-sap.ui.define(["com/meir/meirordersmobile/controller/BaseController","sap/ui/core/routing/History"],function(e,t){"use strict";return e.extend("com.meir.meirordersmobile.controller.MONewActivityDetails",{onInit:function(){var e=this.getRouter();e.getRoute("MONewActivityDetails").attachPatternMatched(this._onRouteMatched,this)},_onRouteMatched:function(){var e=this.getOwnerComponent().getModel("moModel");this.ObjectId=e.getProperty("/MONewActivityDetails/currentActivityDetails/ObjectId");this.ObjectType=e.getProperty("/MONewActivityDetails/currentActivityDetails/ObjectType");this.sProcessType=e.getProperty("/MONewActivityDetails/currentActivityDetails/ProcessType");this.sGuid=e.getProperty("/MONewActivityDetails/currentActivityDetails/Guid");if(this.ObjectId&&this.ObjectType){this.getCurrentAttachments()}this.sProcessType=this.sProcessType?this.sProcessType:"ZPCT";e.setProperty("/MONewActivityDetails/currentActivityDetails/ProcessType",this.sProcessType);var t=e.getProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatus");t=t?t:"E0010";e.setProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatus",t);this.getActivityStatus(this.sProcessType,this.sGuid)},getActivityStatus:function(e,t){this.getView().setBusy(true);var i=[];if(t){i.push(new sap.ui.model.Filter("Guid","EQ",t))}else{i.push(new sap.ui.model.Filter("ProcessType","EQ",e))}var r=this;var s={filters:i,success:function(e){var t=r.getOwnerComponent().getModel("moModel");t.setProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatusOptions",e.results);r.getView().setBusy(false)},error:function(e){r.getView().setBusy(false);r.error.processConnectionError(e,r)}};this.models.doRead(this,"/ProcessTypeStatusSet",s,true)},onStatusOppChange:function(e){var t=e.getSource().getSelectedKey();var i=this.getOwnerComponent().getModel("moModel");i.setProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatus",t)},getActivityEntity:function(){this.getView().setBusy(true);var e=this.getOwnerComponent().getModel();var t=this;var i="/ActivitySet(guid'"+this.Guid+"')";e.read(i,{success:function(e){var i=t.getOwnerComponent().getModel("moModel");i.setProperty("/MONewActivityDetails/currentActivityDetails",e.results);t.getView().setBusy(false)},error:function(e){t.getView().setBusy(false)}})},getCurrentAttachments:function(){var e=[new sap.ui.model.Filter("ObjectId","EQ",this.ObjectId),new sap.ui.model.Filter("ObjectType","EQ",this.ObjectType)];var t=this;var i={filters:e,success:function(e){var i=t.getOwnerComponent().getModel("moModel");i.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet",e.results);t.getView().setBusy(false)}};this.models.doRead(this,"/AttachmentSet",i,true)},getIconType:function(e){if(e==="1"){return"css/icons/imageIcon.svg"}else if(e==="2"){return"css/icons/music_note_black.svg"}return"css/icons/article_black_icon.svg"},getAttachmentType:function(e){var t=["JPG","JPEG","jpeg","jpg","PNG","png"];if(t.includes(e)){return"1"}return"99"},onNavigatePressReturn:function(){var e=t.getInstance();var i=e.getPreviousHash();if(i){window.history.go(-1)}else{this.getRouter().navTo("overview",true)}},handleUpload:function(e){var t=this.getGlobalModel("moModel");var i=t.getProperty("/MONewActivityDetails/currentActivityDetails");var r=this.getOwnerComponent().getModel("moModel");var s=this;var o=e.getSource();var a=o.getFocusDomRef();var n=a.files[0];var c=o.getProperty("value");var l=c.split(".").pop();var u=this.getAttachmentType(l);var d=t.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");d=d?d:[];var g=new FileReader;g.onload=function(e){var i=e.currentTarget.result.split(",")[1];d.push({ObjectId:this.ObjectId?this.ObjectId:null,ObjectType:this.ObjectType?this.ObjectType:null,FileName:c,AttachmentType:u,FileContent:i,isNew:true});t.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet",d)};g.readAsDataURL(n)},createNewActivity:function(){var e=this;this.getView().setBusy(true);var t=this.getOwnerComponent().getModel();var i=this.getGlobalModel("moModel").getProperty("/MONewActivityDetails/currentActivityDetails");var r={Partner:i.Partner,OppObjectId:i.OppObjectId,Date:i.Date,Comments:i.Comments,ProcessType:i.ProcessType,Status:i.ActivityStatus};if(i.Guid){r.Guid=i.Guid;r.Time=i.Time}else{var s=i.Time;var o=s.split(":");var a="PT"+o[0]+"H"+o[1]+"M00S";r.Time=a}var n=this.getGlobalModel("moModel");var c=n.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");var l=false;c=c?c:[];for(var u=0,d=c.length;u<d;u++){if(c[u].isNew){l=true;break}}var g={success:function(t){e.getView().setBusy(false);if(l){e.saveAttachments(t)}else{e.onOpenSaveDialog()}}};this.models.doCreate(this,"/ActivitySet",r,g,true)},saveAttachments:function(e){var t=e.ObjectId;var i=e.ObjectType;var r=this.getGlobalModel("moModel");var s=r.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");var o=this;this._nCounter=0;this._nNewAttachments=0;s.forEach(function(e,s){if(e.isNew){o._nNewAttachments++;var a={success:function(e){r.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet/"+s+"/isNew",false);o._nCounter++;if(o._nNewAttachments===o._nCounter){o.onOpenSaveDialog()}}};var n=JSON.parse(JSON.stringify(e));delete n.isNew;n.ObjectId=t;n.ObjectType=i;o.models.doCreate(o,"/AttachmentSet",n,a,true)}})},onOpenSaveDialog:function(){var e=null;if(!sap.ui.getCore().byId("saveDetailsDialog")){e=sap.ui.xmlfragment("com.meir.meirordersmobile.view.saveDetailsDialog",this);this.getView().addDependent(e)}else{e=sap.ui.getCore().byId("saveDetailsDialog")}if(!e.isOpen()){e.open()}},onCloseDialog:function(){sap.ui.getCore().byId("saveDetailsDialog").close();this.onNavHome()},onOpenRecordDialog:function(){var e=null;if(!sap.ui.getCore().byId("RecordAudioDialog")){e=sap.ui.xmlfragment("com.meir.meirordersmobile.view.RecordAudioDialog",this);this.getView().addDependent(e)}else{e=sap.ui.getCore().byId("RecordAudioDialog")}if(!e.isOpen()){var t=this.getOwnerComponent().getModel("i18n").getResourceBundle();sap.ui.getCore().byId("toggleRecordBtn").setText(t.getText("recording"));e.open()}},onCloseRecordDialog:function(){sap.ui.getCore().byId("RecordAudioDialog").close();sap.ui.getCore().byId("toggleRecordBtn").setVisible(true);sap.ui.getCore().byId("playRecordingBtn").setVisible(false);sap.ui.getCore().byId("deleteRecordingBtn").setVisible(false);sap.ui.getCore().byId("sevaRecordingBtn").setVisible(false)},stream:{},blobs:[],oFileAudioData:{ObjectId:"",ObjectType:"",FileName:"",AttachmentType:"",FileContent:""},recorderBlob:{},onToggleRecording:async function(e){if(e.getSource().getPressed()){var t=this.getOwnerComponent().getModel("i18n").getResourceBundle();e.getSource().setText(t.getText("stopRecording"));this.stream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});this.mediaRecorder=new window.MediaRecorder(this.stream);this.mediaRecorder.ondataavailable=function(e){this.blobs.push(e.data)}.bind(this);this.mediaRecorder.onstop=function(e){this.recorderBlob=new Blob(this.blobs,{type:this.mediaRecorder.mimeType});var t=new Date;this.blobs=[];var i=t.getDate()+"_"+t.getMonth()+"_"+t.getYear();var r=t.getHours()+"_"+t.getMinutes();var s="recording "+i+" "+r+".webm";this.oFileAudioData={ObjectId:this.ObjectId,ObjectType:this.ObjectType,FileName:s,AttachmentType:"2",FileContent:""}}.bind(this);this.mediaRecorder.start()}else{this.mediaRecorder.stop();this.stream.getTracks().forEach(function(e){e.stop()});sap.ui.getCore().byId("toggleRecordBtn").setVisible(false);sap.ui.getCore().byId("playRecordingBtn").setVisible(true);sap.ui.getCore().byId("deleteRecordingBtn").setVisible(true);sap.ui.getCore().byId("sevaRecordingBtn").setVisible(true)}},onPlayRecording:function(){var e=window.URL.createObjectURL(this.recorderBlob);var t=new Audio(e);t.play()},onDeleteRecording:function(){this.oFileAudioData={ObjectId:"",ObjectType:"",FileName:"",AttachmentType:"2",FileContent:""};this.onCloseRecordDialog()},onSaveRecording:function(){var e=this.getOwnerComponent().getModel("moModel");var t=this;var i=this.getGlobalModel("moModel").getProperty("/MONewActivityDetails/currentActivityDetails");var r=e.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");r=r?r:[];var s=new FileReader;s.onload=function(i){var s=new Date;var o=s.getDate()+"_"+s.getMonth()+"_"+s.getYear();var a=s.getHours()+"_"+s.getMinutes();var n="recording "+o+" "+a+".webm";var c=i.currentTarget.result.split(",")[1];r.push({ObjectId:t.ObjectId?t.ObjectId:null,ObjectType:t.ObjectType?t.ObjectType:null,FileName:n,AttachmentType:"2",FileContent:c,isNew:true});e.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet",r);t.onCloseRecordDialog()};s.readAsDataURL(t.recorderBlob)},onPlaySaveRecording:async function(e){var t=e.getSource();if(e.getSource().getPressed()){var i=e.getSource().data("attachmentDetails");var r=await fetch("data:audio/webm;base64,"+i.FileContent);var s=await r.blob();var o=window.URL.createObjectURL(s);this.oAudioFile=new Audio(o);t.setIcon("css/icons/icons8-pause-30.png");this.oAudioFile.play()}else{t.setIcon("css/icons/play_circle_black.svg");this.oAudioFile.pause()}},onViewDoc:async function(e){console.log("on play function");var t=e.getSource().data("attachmentDetails");var i=t.FileName;var r=i.split(".").pop();var s;if(t.AttachmentType==="1"){s="data:image/"+r+";base64,"}else{s="data:application/"+r+";base64,"}var o=t.FileContent;var a=document.createElement("a");a.download=encodeURI("document."+r.toLowerCase());a.href=s+o;a.click()},onDeleteAttachment:function(e){var t=e.getSource().getBindingContext("moModel").getPath();var i=parseFloat(t.split("/").pop());var r=this.getOwnerComponent().getModel("moModel");var s=r.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");s.splice(i,1);r.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet",s)}})});
+sap.ui.define([
+	"com/meir/meirordersmobile/controller/BaseController",
+	"sap/ui/core/routing/History"
+], function (BaseController, History) {
+	"use strict";
+
+	return BaseController.extend("com.meir.meirordersmobile.controller.MONewActivityDetails", {
+
+		onInit: function () {
+			var oRouter = this.getRouter();
+			oRouter.getRoute("MONewActivityDetails").attachPatternMatched(this._onRouteMatched, this);
+		},
+
+		// get from: "/MONewActivityDetails/currentActivityDetails"
+		// currentActivityDetails
+		// Comments: ""
+		// Date: "/Date(1649980800000)/"
+		// Description: "����� -  �������� ���� ����� ��\"�"
+		// Detailexists: "X"
+		// Guid: "0004AC1B-F7FE-A7DE-88F3-312A1400636C"
+		// GuidChar: "0004AC1BF7FEA7DE88F3312A1400636C%"
+		// Message: ""
+		// ObjectId: "605231"
+		// ObjectType: "BUS2000126"
+		// OppGuid: null
+		// OppObjectId: ""
+		// Partner: ""
+		// PartnerOwner: ""
+		// ProcessType: "ZAPT"
+		// Status: "E0010"
+		// StatusDesc: "����"
+		// Time: "PT08H00M00S"
+		// Username: ""
+		// VechileModel: ""
+
+		_onRouteMatched: function () {
+            debugger;
+			var moModel = this.getOwnerComponent().getModel("moModel");
+			this.ObjectId = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/ObjectId");
+			this.ObjectType = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/ObjectType");
+			debugger;
+			this.sProcessType = moModel.oData.ProcessType;
+			this.sGuid = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/Guid");
+
+			if (this.ObjectId && this.ObjectType) {
+				this.getCurrentAttachments();
+			}
+
+			// "ZPCT" - Phone call  "ZAPT" - Appointment
+			this.sProcessType = this.sProcessType ? this.sProcessType : "ZPCT";
+			moModel.setProperty("/MONewActivityDetails/currentActivityDetails/ProcessType", this.sProcessType);
+
+			var sActivityStatus = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatus");
+			sActivityStatus = sActivityStatus ? sActivityStatus : "E0010";
+			moModel.setProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatus", sActivityStatus);
+			this.getActivityStatus(this.sProcessType, this.sGuid);
+		},
+
+		// ===============================================================
+		// /sap/opu/odata/sap/ZSALES_TRUCKS_SRV/ProcessTypeStatusSet?$filter=(Guid eq guid'0004ac1b-f7fe-a6d3-9d89-e6bba000236c')
+
+		getActivityStatus: function (sProcessType, sGuid) {
+			this.getView().setBusy(true);
+			var aFilters = [];
+			if (sGuid) {
+				aFilters.push(new sap.ui.model.Filter("Guid", "EQ", sGuid));
+			} else {
+				aFilters.push(new sap.ui.model.Filter("ProcessType", "EQ", sProcessType));
+			}
+
+			var that = this;
+			var oParams = {
+				filters: aFilters,
+				success: function (oData) {
+					var oMainTableModel = that.getOwnerComponent().getModel("moModel");
+					oMainTableModel.setProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatusOptions", oData.results);
+					that.getView().setBusy(false);
+				},
+				error: function (oError) {
+					that.getView().setBusy(false);
+					that.error.processConnectionError(oError, that);
+				}
+			};
+			this.models.doRead(this, "/ProcessTypeStatusSet", oParams, true);
+		},
+
+		onStatusOppChange: function (oEvent) {
+			var sActivityStatus = oEvent.getSource().getSelectedKey();
+			var moModel = this.getOwnerComponent().getModel("moModel");
+			moModel.setProperty("/MONewActivityDetails/currentActivityDetails/ActivityStatus", sActivityStatus);
+		},
+
+		// ============================================================================
+
+		/** 
+		 * get exist Activity Entity
+		 */
+		getActivityEntity: function () {
+			this.getView().setBusy(true);
+			var oModel = this.getOwnerComponent().getModel();
+			var that = this;
+			var sEntitySet = "/ActivitySet(guid'" + this.Guid + "')";
+			oModel.read(sEntitySet, {
+				success: function (oData) {
+					var oMainTableModel = that.getOwnerComponent().getModel("moModel");
+					oMainTableModel.setProperty("/MONewActivityDetails/currentActivityDetails", oData.results);
+					that.getView().setBusy(false);
+				},
+				error: function (oError) {
+					that.getView().setBusy(false);
+				}
+			});
+		},
+
+		/** 
+		 * get current Attachments for current Activity 
+		 */
+		getCurrentAttachments: function () {
+			var aFilters = [
+				new sap.ui.model.Filter("ObjectId", "EQ", this.ObjectId),
+				new sap.ui.model.Filter("ObjectType", "EQ", this.ObjectType)
+			];
+			var that = this;
+			var oParams = {
+				filters: aFilters,
+				success: function (oData) {
+					var oMainTableModel = that.getOwnerComponent().getModel("moModel");
+					oMainTableModel.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet", oData.results);
+					that.getView().setBusy(false);
+				}
+			};
+			// (oController, sEntitySet, mParams, bBusy, sModelName
+			this.models.doRead(this, "/AttachmentSet", oParams, true);
+		},
+
+		/** 
+		 * match between Attachment to icon 1-image 2-voice 99- other
+		 */
+		getIconType: function (oData) {
+			if (oData === "1") {
+				return "css/icons/imageIcon.svg";
+			} else if (oData === "2") {
+				return "css/icons/music_note_black.svg";
+			}
+			return "css/icons/article_black_icon.svg";
+		},
+
+		/** 
+		 * match between Attachment type to code 1-image 2-voice 99- other
+		 */
+		getAttachmentType: function (sFileEnd) {
+			var fileTtypesImgArr = ["JPG", "JPEG", "jpeg", "jpg", "PNG", "png"];
+			if (fileTtypesImgArr.includes(sFileEnd)) {
+				return "1";
+			}
+			return "99";
+		},
+
+		/** 
+		 * naviget to previous view
+		 */
+		onNavigatePressReturn: function () {
+			var oHistory = History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+			if (sPreviousHash) {
+				window.history.go(-1);
+			} else {
+				this.getRouter().navTo("overview", true);
+			}
+		},
+
+		/** 
+		 * add new Attachment to aAttachments arrey and update MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet
+		 */
+		handleUpload: function (oEvent) {
+			var oModel = this.getGlobalModel("moModel");
+			var oCurrentActivityDetails = oModel.getProperty("/MONewActivityDetails/currentActivityDetails");
+			var moModel = this.getOwnerComponent().getModel("moModel");
+			var that = this;
+			var oUploader = oEvent.getSource();
+			var domRef = oUploader.getFocusDomRef();
+			var file = domRef.files[0];
+			var sFileName = oUploader.getProperty('value');
+			var sFileEnd = sFileName.split(".").pop();
+			var sFileType = this.getAttachmentType(sFileEnd);
+
+			// AttachmentType,FileContent,DocKey,FileName,ObjectType,ObjectId
+
+			// var oFileData = {
+			// 	ObjectId: ,
+			// 	ObjectType: ,
+			// 	FileName: ,
+			// 	AttachmentType: ,
+			// 	FileContent: "",
+			// };
+			var aAttachments = oModel.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");
+			aAttachments = aAttachments ? aAttachments : [];
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				var sFileContent = e.currentTarget.result.split(",")[1];
+				aAttachments.push({
+					ObjectId: this.ObjectId ? this.ObjectId : null,
+					ObjectType: this.ObjectType ? this.ObjectType : null,
+					FileName: sFileName,
+					AttachmentType: sFileType,
+					FileContent: sFileContent,
+					isNew: true
+				});
+				oModel.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet", aAttachments);
+
+			}
+			reader.readAsDataURL(file);
+			// reader.readAsBinaryString(file);
+		},
+
+		/** 
+		 * on press save button create new activity or update exist Activity
+		 */
+		createNewActivity: function () {
+			var that = this;
+			this.getView().setBusy(true);
+			var oModel = this.getOwnerComponent().getModel();
+
+			var oCurrentActivityDetails = this.getGlobalModel("moModel").getProperty(
+				"/MONewActivityDetails/currentActivityDetails");
+
+			var oPayload = {
+				Partner: oCurrentActivityDetails.Partner,
+				OppObjectId: oCurrentActivityDetails.OppObjectId,
+				Date: oCurrentActivityDetails.Date,
+				Comments: oCurrentActivityDetails.Comments,
+				ProcessType: oCurrentActivityDetails.ProcessType,
+				Status: oCurrentActivityDetails.ActivityStatus
+			};
+
+			if (oCurrentActivityDetails.Guid) {
+				oPayload.Guid = oCurrentActivityDetails.Guid;
+				oPayload.Time = oCurrentActivityDetails.Time;
+				// oPayload.ProcessType = "ZAPT";
+			} else {
+				var sTime = oCurrentActivityDetails.Time;
+				var sTimeArr = sTime.split(":");
+				var timeToBe = "PT" + sTimeArr[0] + "H" + sTimeArr[1] + "M00S";
+				oPayload.Time = timeToBe;
+				// oPayload.ProcessType = "ZPCT";
+			}
+
+			var moModel = this.getGlobalModel("moModel");
+			var aAttachments = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");
+			var bHasNewAttachments = false;
+
+			aAttachments = aAttachments ? aAttachments : [];
+			for (var i = 0, maxi = aAttachments.length; i < maxi; i++) {
+				if (aAttachments[i].isNew) {
+					bHasNewAttachments = true;
+					break;
+				}
+			}
+			var mParams = {
+				success: function (oData) {
+					that.getView().setBusy(false);
+					//TODO complete the attachments fn
+					if (bHasNewAttachments) {
+						that.saveAttachments(oData);
+					} else {
+						that.onOpenSaveDialog();
+					}
+				}
+			};
+			this.models.doCreate(this, "/ActivitySet", oPayload, mParams, true);
+		},
+
+		/** 
+		 * save new Attachments to db
+		 */
+		saveAttachments: function (oActivityData) {
+			var sObjectId = oActivityData.ObjectId;
+			var sObjectType = oActivityData.ObjectType;
+			var moModel = this.getGlobalModel("moModel");
+			var aAttachments = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");
+			var that = this;
+			this._nCounter = 0;
+			this._nNewAttachments = 0;
+			aAttachments.forEach(function (oAttachment, index) {
+				if (oAttachment.isNew) {
+					that._nNewAttachments++;
+					var mParams = {
+						success: function (oData) {
+							moModel.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet/" + index + "/isNew", false);
+							that._nCounter++;
+							if (that._nNewAttachments === that._nCounter) {
+								//done uploading all new files
+								that.onOpenSaveDialog();
+							}
+						}
+					};
+					var oFileData = JSON.parse(JSON.stringify(oAttachment));
+					delete oFileData.isNew;
+					oFileData.ObjectId = sObjectId;
+					oFileData.ObjectType = sObjectType;
+					// send file to Be:
+					that.models.doCreate(that, "/AttachmentSet", oFileData, mParams, true);
+				}
+			});
+
+		},
+
+		/** 
+		 * open dialog after all details save successfully
+		 */
+		onOpenSaveDialog: function () {
+			var oDialog = null;
+			if (!sap.ui.getCore().byId("saveDetailsDialog")) {
+				oDialog = sap.ui.xmlfragment("com.meir.meirordersmobile.view.saveDetailsDialog", this);
+				this.getView().addDependent(oDialog);
+			} else {
+				oDialog = sap.ui.getCore().byId("saveDetailsDialog");
+			}
+			if (!oDialog.isOpen()) {
+				oDialog.open();
+			}
+		},
+
+		/** 
+		 * close dialog and nav to homepage
+		 */
+		onCloseDialog: function () {
+			sap.ui.getCore().byId("saveDetailsDialog").close();
+			this.onNavHome();
+		},
+
+		/** 
+		 * open recording dialog
+		 */
+		onOpenRecordDialog: function () {
+			var oDialog = null;
+			if (!sap.ui.getCore().byId("RecordAudioDialog")) {
+				oDialog = sap.ui.xmlfragment("com.meir.meirordersmobile.view.RecordAudioDialog", this);
+				this.getView().addDependent(oDialog);
+			} else {
+				oDialog = sap.ui.getCore().byId("RecordAudioDialog");
+			}
+			if (!oDialog.isOpen()) {
+				var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+				sap.ui.getCore().byId("toggleRecordBtn").setText(oBundle.getText("recording"));
+				oDialog.open();
+			}
+		},
+
+		/** 
+		 *close recording dialog
+		 */
+		onCloseRecordDialog: function () {
+			sap.ui.getCore().byId("RecordAudioDialog").close();
+			sap.ui.getCore().byId("toggleRecordBtn").setVisible(true);
+			sap.ui.getCore().byId("playRecordingBtn").setVisible(false);
+			sap.ui.getCore().byId("deleteRecordingBtn").setVisible(false);
+			sap.ui.getCore().byId("sevaRecordingBtn").setVisible(false);
+		},
+
+		stream: {},
+		blobs: [],
+		oFileAudioData: {
+			ObjectId: "",
+			ObjectType: "",
+			FileName: "",
+			AttachmentType: "",
+			FileContent: "",
+		},
+
+		recorderBlob: {},
+
+		/** 
+		 *start/stop  recording dialog
+		 */
+		onToggleRecording: async function (oEvent) {
+			if (oEvent.getSource().getPressed()) {
+				var oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+				oEvent.getSource().setText(oBundle.getText("stopRecording"));
+				this.stream = await navigator.mediaDevices.getUserMedia({
+					audio: true,
+					video: false
+				});
+				this.mediaRecorder = new window.MediaRecorder(this.stream);
+				this.mediaRecorder.ondataavailable = function (e) {
+					this.blobs.push(e.data);
+				}.bind(this);
+				this.mediaRecorder.onstop = function (e) {
+					this.recorderBlob = new Blob(this.blobs, {
+						'type': this.mediaRecorder.mimeType
+					});
+					var date = new Date();
+
+					this.blobs = [];
+					var sDateYear = date.getDate() + "_" + date.getMonth() + "_" + date.getYear();
+					var sDateTime = date.getHours() + "_" + date.getMinutes();
+					var sFileName = "recording " + sDateYear + " " + sDateTime + ".webm";
+
+					this.oFileAudioData = {
+						ObjectId: this.ObjectId,
+						ObjectType: this.ObjectType,
+						FileName: sFileName,
+						AttachmentType: "2",
+						FileContent: "",
+					};
+
+					// window.open(audioURL);
+				}.bind(this);
+
+				this.mediaRecorder.start();
+			} else {
+				this.mediaRecorder.stop();
+				this.stream.getTracks().forEach(function (track) {
+					track.stop()
+				});
+				sap.ui.getCore().byId("toggleRecordBtn").setVisible(false);
+				sap.ui.getCore().byId("playRecordingBtn").setVisible(true);
+				sap.ui.getCore().byId("deleteRecordingBtn").setVisible(true);
+				sap.ui.getCore().byId("sevaRecordingBtn").setVisible(true);
+			}
+		},
+
+		/** 
+		 *play new recording from dialog
+		 */
+		onPlayRecording: function () {
+			var audioURL = window.URL.createObjectURL(this.recorderBlob);
+			var oAudioFile = new Audio(audioURL);
+			oAudioFile.play();
+		},
+
+		/** 
+		 *delete recording
+		 */
+		onDeleteRecording: function () {
+			this.oFileAudioData = {
+				ObjectId: "",
+				ObjectType: "",
+				FileName: "",
+				AttachmentType: "2",
+				FileContent: "",
+			};
+			this.onCloseRecordDialog();
+		},
+
+		/** 
+		 *save recording and close recording dialog
+		 */
+		onSaveRecording: function () {
+			var moModel = this.getOwnerComponent().getModel("moModel");
+			var that = this;
+			var oCurrentActivityDetails = this.getGlobalModel("moModel").getProperty("/MONewActivityDetails/currentActivityDetails");
+
+			// AttachmentType,FileContent,DocKey,FileName,ObjectType,ObjectId
+			var aAttachments = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");
+			aAttachments = aAttachments ? aAttachments : [];
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				var date = new Date();
+				var sDateYear = date.getDate() + "_" + date.getMonth() + "_" + date.getYear();
+				var sDateTime = date.getHours() + "_" + date.getMinutes();
+				var sFileName = "recording " + sDateYear + " " + sDateTime + ".webm";
+				var sFileContent = e.currentTarget.result.split(",")[1];
+
+				aAttachments.push({
+					ObjectId: that.ObjectId ? that.ObjectId : null,
+					ObjectType: that.ObjectType ? that.ObjectType : null,
+					FileName: sFileName,
+					AttachmentType: "2",
+					FileContent: sFileContent,
+					isNew: true
+				});
+				moModel.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet", aAttachments);
+				that.onCloseRecordDialog();
+			}
+			reader.readAsDataURL(that.recorderBlob);
+		},
+
+		/** 
+		 *play recording from Attachments list
+		 */
+		onPlaySaveRecording: async function (oEvent) {
+			var button = oEvent.getSource();
+			if (oEvent.getSource().getPressed()) {
+				var oCurrentAttachmentDetails = oEvent.getSource().data("attachmentDetails");
+				var base64 = await fetch("data:audio/webm;base64," + oCurrentAttachmentDetails.FileContent);
+				var blob = await base64.blob();
+				var audioURL = window.URL.createObjectURL(blob);
+				this.oAudioFile = new Audio(audioURL);
+				button.setIcon("css/icons/icons8-pause-30.png");
+				this.oAudioFile.play();
+
+			} else {
+				button.setIcon("css/icons/play_circle_black.svg");
+				this.oAudioFile.pause();
+			}
+		},
+
+		/** 
+		 *view documents from Attachments list
+		 */
+		onViewDoc: async function (oEvent) {
+			console.log("on play function");
+			var oCurrentAttachmentDetails = oEvent.getSource().data("attachmentDetails");
+			var sFileName = oCurrentAttachmentDetails.FileName;
+			var sFileType = sFileName.split(".").pop();
+			var sFormat;
+			if (oCurrentAttachmentDetails.AttachmentType === "1") {
+				sFormat = "data:image/" + sFileType + ";base64,";
+			} else {
+				sFormat = "data:application/" + sFileType + ";base64,";
+			}
+
+			// var base64 = await fetch(sFormat + oCurrentAttachmentDetails.FileContent64);
+			// var blob = await base64.blob();
+			// var dataURL = window.URL.createObjectURL(blob);
+			// window.open(sFormat + oCurrentAttachmentDetails.FileContent64, "_blank"); 
+
+			var sContent = oCurrentAttachmentDetails.FileContent;
+			var a = document.createElement("a");
+			a.download = encodeURI("document." + sFileType.toLowerCase());
+			a.href = sFormat + sContent;
+			a.click();
+
+			// window.open(dataURI);
+			// var dataURI = sFormat + oCurrentAttachmentDetails.FileContent64
+			// var audioURL = window.URL.createObjectURL(blob);
+			// this.oAudioFile = new Audio(audioURL);
+			// this.oAudioFile.play();
+			// sap.ui.getCore().byId("togglePlayBtn").setIcon("css/icons/icons8-pause-30.png")
+		},
+
+		/** 
+		 *delete Attachments before saved in db
+		 */
+		onDeleteAttachment: function (oEvent) {
+			var sPath = oEvent.getSource().getBindingContext("moModel").getPath();
+			var nIndex = parseFloat(sPath.split("/").pop());
+			var moModel = this.getOwnerComponent().getModel("moModel");
+			var aAttachments = moModel.getProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet");
+			aAttachments.splice(nIndex, 1);
+			moModel.setProperty("/MONewActivityDetails/currentActivityDetails/CurrentAttachmentsSet", aAttachments);
+		}
+
+	});
+
+});

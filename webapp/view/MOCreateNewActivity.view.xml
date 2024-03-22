@@ -17,7 +17,7 @@
 				<VBox width="100%">
 					<Text class="dateText sapUiTinyMarginBottom" text="{i18n>Date}"></Text>
 					<VBox width="100%" justifyContent="Center">
-						<DatePicker change="handleDateChange" class="activityDate" placeholder="DD/MM/YY" width="100%" value="{newActivitySetting>/PostingDate}"/>
+						<DatePicker id="DP1" change="handleDateChange" class="activityDate" placeholder="DD/MM/YY" width="100%" value="{newActivitySetting>/PostingDate}"/>
 					</VBox>
 				</VBox>
 				<HBox class="sapUiSmallMarginTop timeBox" justifyContent="SpaceBetween">

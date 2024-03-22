@@ -1,1 +1,122 @@
-sap.ui.define(["com/meir/meirordersmobile/controller/BaseController","sap/ui/core/routing/History"],function(e,t){"use strict";return e.extend("com.meir.meirordersmobile.controller.MOCreateNewActivity",{onInit:function(){var e=this.getRouter();e.getRoute("MOCreateNewActivity").attachPatternMatched(this._onRouteMatched,this);var t=new sap.ui.model.json.JSONModel([]);this.getOwnerComponent().setModel(t,"newActivitySetting")},_onRouteMatched:function(e){this.getView().getModel("newActivitySetting").setProperty("/",[]);this.getOpportunitySet()},onNavigatePressReturn:function(){var e=t.getInstance();var r=e.getPreviousHash();if(r!==undefined){window.history.go(-1)}else{var o=sap.ui.core.UIComponent.getRouterFor(this);o.navTo("overview",true)}},selectOpportunity:function(e){var t=this.getOwnerComponent().getModel("moModel");var r=e.getSource().getSelectedContextPaths();var o=t.getProperty(r+"/VechileModel");var i=t.getProperty(r+"/StatusDesc");var n=t.getProperty(r+"/CreateDate");var s=t.getProperty(r+"/ObjectId");var a=t.getProperty(r+"/Guid");this.getView().getModel("newActivitySetting").setProperty("/OppObjectId",s);this.getView().getModel("newActivitySetting").setProperty("/VechileModel",o);this.getView().getModel("newActivitySetting").setProperty("/StatusDesc",i);this.getView().getModel("newActivitySetting").setProperty("/CreateDate",n);this.getView().getModel("newActivitySetting").setProperty("/OppGuid",a)},getOpportunitySet:function(){this.getView().setBusy(true);var e=this.getOwnerComponent().getModel();var t=[];var r=this;var o=this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/Partner");t.push(new sap.ui.model.Filter("Partner","EQ",o));e.read("/OpportunitySet",{filters:t,success:function(e){var t=r.getOwnerComponent().getModel("moModel");t.setProperty("/MOCreateNewActivity/OpportunitySet",e.results);r.getView().setBusy(false)},error:function(e){r.getView().setBusy(false)}})},onPressGoNext:function(){var e=this.getView().getModel("newActivitySetting");var t=this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/NameFirst");var r=this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/NameLast");var o=this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/Partner");var i=e.getData().PostingDate;var n=i.split(".");var s=Number(n[0]);var a=Number(n[1])-1;var g=Number(n[2]);var p=Date.UTC(g,a,s);var u=new Date(p);var l=this.getOwnerComponent().getModel("i18n").getProperty("newCall");var c=l+" "+t+" "+r;e.setProperty("/Description",c);e.setProperty("/Date",u);e.setProperty("/Partner",o);e.setProperty("/NameFirst",t);e.setProperty("/NameLast",r);this.getOwnerComponent().getModel("moModel").setProperty("/MONewActivityDetails/currentActivityDetails",e.getData());this.getRouter().navTo("MONewActivityDetails");this.getView().byId("listOpp").removeSelections(true)}})});
+sap.ui.define([
+	"com/meir/meirordersmobile/controller/BaseController",
+	"sap/ui/core/routing/History"
+], function (BaseController, History) {
+	"use strict";
+
+	return BaseController.extend("com.meir.meirordersmobile.controller.MOCreateNewActivity", {
+
+		onInit: function () {
+			var oRouter = this.getRouter();
+			oRouter.getRoute("MOCreateNewActivity").attachPatternMatched(this._onRouteMatched, this);
+
+			var oModel = new sap.ui.model.json.JSONModel([]);
+			this.getOwnerComponent().setModel(oModel, "newActivitySetting");
+
+		},
+
+		_onRouteMatched: function (oEvent) {
+			this.getView().getModel("newActivitySetting").setProperty("/", []);
+			this.getOpportunitySet();
+		},
+
+		/** 
+		 * back the last page
+		 */
+		onNavigatePressReturn: function () {
+			var oHistory = History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				oRouter.navTo("overview", true);
+			}
+
+		},
+
+
+		/** 
+		 * @param oEvent from selection
+		 * save the data of currrent line in newActivitySetting model
+		 */
+		selectOpportunity: function (oEvent) {
+			var oMoModel = this.getOwnerComponent().getModel("moModel");
+			var sPath = oEvent.getSource().getSelectedContextPaths();
+			var VechileModel = oMoModel.getProperty(sPath + "/VechileModel");
+			var StatusDesc = oMoModel.getProperty(sPath + "/StatusDesc");
+			var CreateDate = oMoModel.getProperty(sPath + "/CreateDate");
+			var OppObjectId = oMoModel.getProperty(sPath + "/ObjectId");
+			var sGuid = oMoModel.getProperty(sPath + "/Guid");
+
+			this.getView().getModel("newActivitySetting").setProperty("/OppObjectId", OppObjectId);
+			this.getView().getModel("newActivitySetting").setProperty("/VechileModel", VechileModel);
+			this.getView().getModel("newActivitySetting").setProperty("/StatusDesc", StatusDesc);
+			this.getView().getModel("newActivitySetting").setProperty("/CreateDate", CreateDate);
+			this.getView().getModel("newActivitySetting").setProperty("/OppGuid", sGuid);
+
+		},
+
+		/** 
+		 * get OpportunitySet from BE
+		 */
+		getOpportunitySet: function () {
+			this.getView().setBusy(true);
+			var oModel = this.getOwnerComponent().getModel();
+			var aFilters = [];
+			var that = this;
+			//TODO-hard coding
+			// aFilters.push(new sap.ui.model.Filter("Partner", "EQ", "1005866"));
+			var partner = this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/Partner");
+			aFilters.push(new sap.ui.model.Filter("Partner", "EQ", partner));
+			oModel.read("/OpportunitySet", {
+				filters: aFilters,
+				success: function (oData) {
+					var oMoModel = that.getOwnerComponent().getModel("moModel");
+					oMoModel.setProperty("/MOCreateNewActivity/OpportunitySet", oData.results);
+					that.getView().setBusy(false);
+				},
+				error: function (oError) {
+					that.getView().setBusy(false);
+				}
+			});
+		},
+
+		/** 
+		 * nav to MONewActivityDetails page
+		 */
+		onPressGoNext: function () {
+			var oNewActivitySetting = this.getView().getModel("newActivitySetting");
+			var NameFirst = this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/NameFirst");
+			var NameLast = this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/NameLast");
+			var sPartner = this.getOwnerComponent().getModel("moModel").getProperty("/MOCustomers/CustomerObject/Partner");
+			debugger;
+			var date = oNewActivitySetting.getData().PostingDate;
+			var aDate = date.split(".");
+			aDate.length > 1 ? aDate : date.split("/");
+			var nDay = Number(aDate[0]);
+			var nMonth = Number(aDate[1]) - 1;
+			var nYear = Number(aDate[2]);
+			var dUTCDate = Date.UTC(nYear, nMonth, nDay);
+			var dBeDate = new Date(dUTCDate);
+			
+		
+
+			
+			var sNewCall = this.getOwnerComponent().getModel("i18n").getProperty("newCall");
+			var sDescription = sNewCall + " " + NameFirst + " " + NameLast;
+
+			oNewActivitySetting.setProperty("/Description", sDescription);
+			oNewActivitySetting.setProperty("/Date", dBeDate);
+			oNewActivitySetting.setProperty("/Partner", sPartner);
+			oNewActivitySetting.setProperty("/NameFirst", NameFirst);
+			oNewActivitySetting.setProperty("/NameLast", NameLast);
+			this.getOwnerComponent().getModel("moModel").setProperty("/MONewActivityDetails/currentActivityDetails", oNewActivitySetting.getData());
+			this.getRouter().navTo("MONewActivityDetails");
+
+			this.getView().byId("listOpp").removeSelections(true);
+		},
+	});
+
+});
