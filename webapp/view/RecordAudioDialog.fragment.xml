@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<Dialog id="RecordAudioDialog" showHeader="false" width="90%">
+	<Dialog id="RecordAudioDialog" showHeader="false" contentWidth="90%">
 		<VBox alignItems="Center" class="recordingContainer" height="325px" renderType="Bare" justifyContent="Center">
 			<Text text="{timer>/Min}:{timer>/Sec}"></Text>
 			<Image src="css/icons/microphoneIcon.svg" width="60px" class="mrgBot25"/>
